@@ -5,8 +5,8 @@ public class DevTest {
     {
         Scanner in = new Scanner(System.in);
 
-        /*
 
+/*
         String name = getNonZeroLenString(in, "Enter your name");
         System.out.println("Name is " + name);
 
@@ -21,10 +21,15 @@ public class DevTest {
 
         double income = getRangedDouble(in, "Enter your income", 5000, 100000);
         System.out.println("You said your income is " + income + ".");
-        */
 
         boolean leaveClass = getYNConfirm(in, "Are you ready to leave class?");
         System.out.println(leaveClass);
+
+        prettyHeader("Header text"); */
+
+        String SSN = getRegExString(in, "Enter your SSN", "^\\d{3}-\\d{2}-\\d{4}$");
+        System.out.println("Your SSN: " + SSN);
+
     }
 
     /**
@@ -233,6 +238,77 @@ public class DevTest {
             else
             {
                 System.out.println("You must enter Yy or Nn! Not: " + input + ".");
+            }
+        }while(!done);
+
+        return retVal;
+    }
+
+    /**
+     * create a pretty header for some text
+     *
+     * @param msg the text that will be in the header
+     */
+
+    public static void prettyHeader(String msg)
+    {
+        final int totalWidth = 60;
+        final int starsCount = 3;
+
+        int messageLength = msg.length();
+        int availableWidth = totalWidth - (starsCount * 2);
+        int padding = (availableWidth - messageLength) / 2;
+
+        for (int i = 0; i < totalWidth; i++)
+        {
+            System.out.print("*");
+        }
+        System.out.println();
+
+        System.out.print("*".repeat(starsCount));
+        for (int i = 0; i < padding; i++)
+        {
+            System.out.print(" ");
+        }
+        System.out.print(msg);
+        for (int i = 0; i < padding; i++)
+        {
+            System.out.print(" ");
+        }
+        System.out.print("*".repeat(starsCount));
+        System.out.println();
+
+        for (int i = 0; i < totalWidth; i++)
+        {
+            System.out.print("*");
+        }
+        System.out.println();
+    }
+
+    /**
+     * returns a string value that matches a regular expression
+     *
+     * @param pipe the scanner to use for input
+     * @param prompt tells the user what to input
+     * @param regEx String - regular expression pattern to match
+     * @return
+     */
+    public static String getRegExString(Scanner pipe, String prompt, String regEx)
+    {
+        boolean done = false;
+        String retVal = "";
+
+        do
+        {
+            System.out.print(prompt + regEx + ": ");
+            retVal = pipe.nextLine();
+            if (retVal.matches(regEx))
+            {
+                done = true;
+            }
+            else
+            {
+                System.out.println("You must enter a value that matches pattern " + regEx + " not " + retVal);
             }
         }while(!done);
 
